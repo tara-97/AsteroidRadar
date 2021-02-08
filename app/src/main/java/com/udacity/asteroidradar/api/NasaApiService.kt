@@ -15,8 +15,8 @@ import retrofit2.http.Query
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create())
 
         .baseUrl(Constants.BASE_URL).build()
 

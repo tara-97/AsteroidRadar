@@ -17,7 +17,8 @@ import java.lang.Exception
 private const val TAG = "AsteroidRepository"
 class AsteroidRepository (private val database:AsteroidDatabase){
 
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAsteroids()){
+    val asteroids: LiveData<List<Asteroid>> = Transformations.map(
+        database.asteroidDao.getAsteroids(LocalDateExt.dateNowFormatted())){
             it.asDomainModel()
     }
     suspend fun refreshDatabase(){
@@ -32,7 +33,7 @@ class AsteroidRepository (private val database:AsteroidDatabase){
                 database.asteroidDao.insertAll(*asteroidOfDatabase)
             }
         }catch (e:Exception){
-            Log.d(TAG, "refreshDatabase: ${e.message}")
+            Log.d(TAG, "refreshDatabase:Got error ->  ${e.message}")
         }
     }
 }

@@ -21,7 +21,9 @@ class MainViewModel(application:Application) : AndroidViewModel(application) {
     private val database = getDataBase(application)
     private val asteroidRepo = AsteroidRepository(database)
 
-    private val pictureOfDay = MutableLiveData<PictureOfDay>()
+    private val _pictureOfDay = MutableLiveData<PictureOfDay>()
+    val pictureOfDay:LiveData<PictureOfDay>
+    get() = _pictureOfDay
 
     private var _navigateToDetailPage = MutableLiveData<Asteroid>()
     val navigateToDetailPage : LiveData<Asteroid>
@@ -31,7 +33,7 @@ class MainViewModel(application:Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             asteroidRepo.refreshDatabase()
-            pictureOfDay.value = NasaApi.retrofitService.getPictureOfDay(Constants.apiKey)
+            _pictureOfDay.value = NasaApi.retrofitService.getPictureOfDay(Constants.apiKey)
             Log.d(TAG, "Picture of day url is ${pictureOfDay.value!!.url}")
         }
 
