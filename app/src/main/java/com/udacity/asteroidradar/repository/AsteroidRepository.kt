@@ -25,7 +25,7 @@ class AsteroidRepository (private val database:AsteroidDatabase){
 
         try {
             withContext(Dispatchers.IO){
-                val asteroidJsonString = NasaApi.retrofitService.getAsteroids(LocalDateExt.dateNowFormatted(),"0dVEZccrqwtgly69cQZOqwOkiJkqEGAUqWsTMsgX")
+                val asteroidJsonString = NasaApi.retrofitService.getAsteroids(LocalDateExt.dateNowFormatted(),Constants.apiKey)
 
                 val asteroidOfDatabase = NetworkAsteroidContainer(
                         parseAsteroidsJsonResult(JSONObject(asteroidJsonString))
